@@ -22,20 +22,8 @@ const router = createRouter({
     {
       path: '/:name',
       name: ':name',
-      id:':id',
-      height:':height',
       component: Pokemon,
-      props: true,
-      //component: ()=>import('../components/Pokemon.vue'),
-      // props: {weight: 100},
-      meta: {weight: 150, height:':height'},
-      //props: (route) => ({ height: route.params.weight, id: route.params.id })
     },
-    // {
-    //   path: '/pokemon',
-    //   name: 'pokemon',
-    //   component: Pokemon,
-    // },
   ],
 })
 

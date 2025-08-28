@@ -3,12 +3,13 @@ import { ref, onMounted, reactive, nextTick } from 'vue';
 
 defineProps<{
   msg: string,
-  id: number,
   name: string,
+  id: number,
   height: number,
   weight: number,
   thumbnail: string,
   img: string,
+  test: string,
   abilities: []
 }>()
 
