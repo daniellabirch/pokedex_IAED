@@ -2,7 +2,7 @@
 
 import { RouterLink, RouterView } from 'vue-router';
 import Pokemon from './Pokemon.vue';
-import { ref, onMounted, reactive, nextTick } from 'vue';
+import { ref, onMounted, reactive, computed, nextTick, getCurrentInstance } from 'vue';
 import { set, useFetch } from '@vueuse/core'
 import router from '../router';
 
@@ -10,6 +10,8 @@ const loaded = ref(false);
 const loading = ref(true);
 const error = ref(null);
 let pokemons = ref([]);
+// let allPokemons = ref([]);
+const searchQuery = ref("");
 
 onMounted(async () => {
   try {
@@ -43,12 +45,14 @@ onMounted(async () => {
 
 
 
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     const newQuery = event.target.value;
-  //     setQuery(newQuery);
-  //     const filteredPokemon = pokemons.filter((el) => el.name.toLowerCase().includes(newQuery.toLowerCase()));
-  //     setList(filteredPokemon);
-  // };
+const filteredPokemons = computed(()=>{
+  if(!searchQuery.value){
+    return pokemons.value;
+  }
+  else{
+    return [...pokemons.value].filter((pokemon) => pokemon.name.includes(searchQuery.value.toLowerCase()));
+  }
+})
 </script>
 
 <style scoped>
@@ -58,11 +62,11 @@ onMounted(async () => {
 <template>
     <div class="wrapper">
       <search>
-        <input></input>
+        <input type="text" v-model="searchQuery" placeholder="search pokemon"></input>
       </search>
       <nav>
         <RouterLink v-if="loading" to="/">Loading Data...</RouterLink>
-        <RouterLink v-if="loaded" v-for="pokemon in pokemons" :key="pokemon.key" :to="pokemon.name">
+        <RouterLink v-if="loaded" v-for="pokemon in filteredPokemons" :key="pokemon.key" :to="pokemon.name">
           {{pokemon.name}}
           <img v-bind:src="pokemon.thumbnail" />
         </RouterLink>
