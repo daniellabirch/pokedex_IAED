@@ -1,16 +1,12 @@
 <script setup lang="ts">
 
 import { RouterLink, RouterView } from 'vue-router';
-import Pokemon from './Pokemon.vue';
 import { ref, onMounted, reactive, computed, nextTick, getCurrentInstance } from 'vue';
-import { set, useFetch } from '@vueuse/core'
-import router from '../router';
 
 const loaded = ref(false);
 const loading = ref(true);
 const error = ref(null);
 let pokemons = ref([]);
-// let allPokemons = ref([]);
 const searchQuery = ref("");
 
 onMounted(async () => {

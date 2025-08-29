@@ -2,18 +2,6 @@
 import { ref, onMounted, reactive, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 
-const props = defineProps<{
-  msg: string,
-  name: string,
-  id: number,
-  height: number,
-  weight: number,
-  thumbnail: string,
-  img: string,
-  test: string,
-  abilities: []
-}>()
-
 const route = useRoute();
 const loaded = ref(false);
 const loading = ref(true);
