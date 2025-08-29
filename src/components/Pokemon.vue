@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive, nextTick } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -28,7 +28,6 @@ onMounted(async () => {
               newData.abilities.map((ability)=>{
                 formatAbilities.push(ability.ability.name);
               });
-              console.log(formatAbilities);
               imgURL = ref(newData.sprites.front_shiny);
               key = ref(newData.id);
               bigImgURL = ref(newData.sprites.other.dream_world.front_default);
@@ -36,7 +35,6 @@ onMounted(async () => {
               height = ref(newData.height);
               weight = ref(newData.weight);
               id = ref(newData.id);
-              console.log(abilities);
               loaded.value = true;
               loading.value = false;
             }
@@ -53,41 +51,36 @@ onMounted(async () => {
   } 
 });
 
+const abilitiesList = computed(()=>{
+  let listString = "";
+  abilities.value.map((ability, index)=>{
+    if(index > abilities.value.length-2){
+      listString += `${ability}`;
+    }
+    else{
+      listString += `${ability}, `;
+    }
+  })
+  return listString
+})
+
 </script>
 
 <template>
   <div class="component">
+    <RouterLink to="/"><- back to Pokedex</RouterLink>
     <h2>{{ $route.params.name }}</h2>
     <img v-bind:src="bigImgURL" />
     <ul v-if="loaded">
       <li>height: {{ height }}</li>
       <li>weight: {{ weight }}</li>
-      <li>abilities: <span v-for="ability in abilities">{{ ability }}, </span></li>
+      <li>abilities: {{ abilitiesList }}</li>
     </ul>
   </div>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
+  div{
+    text-transform: capitalize;
   }
-}
 </style>

@@ -39,8 +39,6 @@ onMounted(async () => {
   }
 });
 
-
-
 const filteredPokemons = computed(()=>{
   if(!searchQuery.value){
     return pokemons.value;
@@ -52,7 +50,12 @@ const filteredPokemons = computed(()=>{
 </script>
 
 <style scoped>
-
+  div{
+    text-transform: capitalize;
+  }
+  a{
+    display: flex;
+  }
 </style>
 
 <template>
